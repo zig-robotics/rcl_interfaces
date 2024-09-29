@@ -1,0 +1,18 @@
+.{
+    .name = "rcl_interfaces",
+    .version = "2.2.0",
+    .dependencies = .{
+        .rcl_interfaces = .{
+            .url = "https://github.com/ros2/rcl_interfaces/archive/tags/2.2.0.tar.gz", // Jazzy
+            .hash = "122056ec4c93fdcf0d978e98d75b661ee23222ed58bba18315c6b021bd1ac58ae029",
+        },
+        .rosidl = .{
+            .url = "https://github.com/zig-robotics/rosidl/archive/8d3c1cadd0dcfb806a8c604d06b3575b8d3c46d1.tar.gz",
+            .hash = "1220e9e15c4ab436293a25de4cd719415359f8f69aa8e9c80b9637a088c2070883a3",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+    },
+}
