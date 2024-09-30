@@ -8,13 +8,13 @@ Currently this only builds the interfaces mandatory for building rcl:
  - service_msgs 
  - type_description_interfaces 
  - rcl_interfaces
+ - rosgraph_msgs
+ - statistics_msgs
 
 Still missing:
  - action_msgs
  - composition_interfaces
  - lifecycle_msgs
- - rosgraph_msgs
- - statistics_msgs
  - test_msgs
 
 https://github.com/ros2/rcl_interfaces/tree/jazzy

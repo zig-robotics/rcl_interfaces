@@ -31,6 +31,22 @@ pub fn build(b: *std.Build) void {
 
     builtin_interfaces.installArtifacts();
 
+    var rosgraph_msgs = RosIdlGenerator.create(
+        b,
+        "rosgraph_msgs",
+        rosidl_dep,
+        target,
+        optimize,
+        linkage,
+    );
+
+    rosgraph_msgs.addMsgs(upstream.path("rosgraph_msgs"), &.{
+        "msg/Clock.msg",
+    });
+
+    rosgraph_msgs.addDependency(.{ .name = "builtin_interfaces", .dependency = builtin_interfaces.asDependency() });
+    rosgraph_msgs.installArtifacts();
+
     var service_msgs = RosIdlGenerator.create(
         b,
         "service_msgs",
@@ -80,6 +96,29 @@ pub fn build(b: *std.Build) void {
     type_description_interfaces.addDependency(.{ .name = "builtin_interfaces", .dependency = builtin_interfaces.asDependency() });
 
     type_description_interfaces.installArtifacts();
+
+    var statistics_msgs = RosIdlGenerator.create(
+        b,
+        "statistics_msgs",
+        rosidl_dep,
+        target,
+        optimize,
+        linkage,
+    );
+
+    statistics_msgs.addMsgs(
+        upstream.path("statistics_msgs"),
+        &.{
+            "msg/MetricsMessage.msg",
+            "msg/StatisticDataPoint.msg",
+            "msg/StatisticDataType.msg",
+        },
+    );
+
+    statistics_msgs.addDependency(.{ .name = "builtin_interfaces", .dependency = builtin_interfaces.asDependency() });
+
+    statistics_msgs.installArtifacts();
+
     var rcl_interfaces = RosIdlGenerator.create(
         b,
         "rcl_interfaces",
