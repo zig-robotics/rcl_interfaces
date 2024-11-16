@@ -6,7 +6,11 @@ pub fn build(b: *std.Build) void {
 
     const optimize = b.standardOptimizeOption(.{});
 
-    const linkage = b.option(std.builtin.LinkMode, "linkage", "Specify static or dynamic linkage") orelse .dynamic;
+    const linkage = b.option(
+        std.builtin.LinkMode,
+        "linkage",
+        "Specify static or dynamic linkage",
+    ) orelse .dynamic;
     const upstream = b.dependency("rcl_interfaces", .{});
 
     const rosidl_dep = b.dependency("rosidl", .{
@@ -24,7 +28,7 @@ pub fn build(b: *std.Build) void {
         linkage,
     );
 
-    builtin_interfaces.addMsgs(upstream.path("builtin_interfaces"), &.{
+    builtin_interfaces.addInterfaces(upstream.path("builtin_interfaces"), &.{
         "msg/Time.msg",
         "msg/Duration.msg",
     });
@@ -40,11 +44,14 @@ pub fn build(b: *std.Build) void {
         linkage,
     );
 
-    rosgraph_msgs.addMsgs(upstream.path("rosgraph_msgs"), &.{
+    rosgraph_msgs.addInterfaces(upstream.path("rosgraph_msgs"), &.{
         "msg/Clock.msg",
     });
 
-    rosgraph_msgs.addDependency(.{ .name = "builtin_interfaces", .dependency = builtin_interfaces.asDependency() });
+    rosgraph_msgs.addDependency(.{
+        .name = "builtin_interfaces",
+        .dependency = builtin_interfaces.asDependency(),
+    });
     rosgraph_msgs.installArtifacts();
 
     var service_msgs = RosIdlGenerator.create(
@@ -56,7 +63,7 @@ pub fn build(b: *std.Build) void {
         linkage,
     );
 
-    service_msgs.addMsgs(
+    service_msgs.addInterfaces(
         upstream.path("service_msgs"),
         &.{"msg/ServiceEventInfo.msg"},
     );
@@ -74,7 +81,7 @@ pub fn build(b: *std.Build) void {
         linkage,
     );
 
-    type_description_interfaces.addMsgs(
+    type_description_interfaces.addInterfaces(
         upstream.path("type_description_interfaces"),
         &.{
             "msg/Field.msg",
@@ -83,12 +90,8 @@ pub fn build(b: *std.Build) void {
             "msg/KeyValue.msg",
             "msg/TypeDescription.msg",
             "msg/TypeSource.msg",
+            "srv/GetTypeDescription.srv",
         },
-    );
-
-    type_description_interfaces.addSrvs(
-        upstream.path("type_description_interfaces"),
-        &.{"srv/GetTypeDescription.srv"},
     );
 
     // TODO any service depends on service msgs? make this standard?
@@ -106,7 +109,7 @@ pub fn build(b: *std.Build) void {
         linkage,
     );
 
-    statistics_msgs.addMsgs(
+    statistics_msgs.addInterfaces(
         upstream.path("statistics_msgs"),
         &.{
             "msg/MetricsMessage.msg",
@@ -128,7 +131,7 @@ pub fn build(b: *std.Build) void {
         linkage,
     );
 
-    rcl_interfaces.addMsgs(
+    rcl_interfaces.addInterfaces(
         upstream.path("rcl_interfaces"),
         &.{
             "msg/FloatingPointRange.msg",
@@ -144,12 +147,6 @@ pub fn build(b: *std.Build) void {
             "msg/SetParametersResult.msg",
             "msg/LoggerLevel.msg",
             "msg/SetLoggerLevelsResult.msg",
-        },
-    );
-
-    rcl_interfaces.addSrvs(
-        upstream.path("rcl_interfaces"),
-        &.{
             "srv/DescribeParameters.srv",
             "srv/GetParameters.srv",
             "srv/GetParameterTypes.srv",

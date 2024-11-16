@@ -7,8 +7,8 @@
             .hash = "122056ec4c93fdcf0d978e98d75b661ee23222ed58bba18315c6b021bd1ac58ae029",
         },
         .rosidl = .{
-            .url = "https://github.com/zig-robotics/rosidl/archive/8d3c1cadd0dcfb806a8c604d06b3575b8d3c46d1.tar.gz",
-            .hash = "1220e9e15c4ab436293a25de4cd719415359f8f69aa8e9c80b9637a088c2070883a3",
+            .url = "https://github.com/zig-robotics/rosidl/archive/bd2c9989e84097804e8219c1086656b7822fd038.tar.gz",
+            .hash = "12202020e4e77eaa3edc2206b411005aeef0d393481a653bb509484fb76301553ab3",
         },
     },
     .paths = .{
